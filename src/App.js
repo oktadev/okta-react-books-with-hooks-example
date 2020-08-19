@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import { Home } from './Home';
 import { Search } from './Search';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { LoginCallback, SecureRoute, Security } from '@okta/okta-react';
+import { Home } from './Home';
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
         </Security>
       </Router>
     </div>
+
   );
 }
 
