@@ -1,68 +1,73 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# A React Hooks Example
+ 
+This example app shows how to create a React app with hooks and functional components.
 
-## Available Scripts
+Please read [Build a Simple React Application Using Hooks](https://developer.okta.com/blog/2020/08/26/react-hooks) to see how this app was created.
 
-In the project directory, you can run:
+**Prerequisites:** 
 
-### `yarn start`
+* [Node 12+](https://nodejs.org/en/) installed
+* An [Okta Developer Account](https://developer.okta.com/signup)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+> [Okta](https://developer.okta.com/) has Authentication and User Management APIs that reduce development time with instant-on, scalable user infrastructure. Okta's intuitive API and expert support make it easy for developers to authenticate, manage and secure users and roles in any application.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+* [Getting Started](#getting-started)
+* [Links](#links)
+* [Help](#help)
+* [License](#license)
 
-### `yarn test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To install this example application, run the following commands:
 
-### `yarn build`
+```bash
+git clone https://github.com/oktadeveloper/okta-react-books-with-hooks-example.git
+cd okta-react-books-with-hooks-example
+npm install
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Create an OIDC App on Okta
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Register a new application by going to **Applications** > **Add Application**. On the next screen, choose **Single Page App** and click **Next**.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+On the following screen, you can edit the application's settings. Make sure that the port number is 3000 and the base URI is `http://localhost:3000/`. Change the Login Redirect URI to `http://localhost:3000/callback`. Once you are done, you will see a **Client ID**.
 
-### `yarn eject`
+### Configure your Okta Settings
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Copy your Okta domain and client ID into `src/App.js`:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```js
+<div className="App">
+  <Router>
+    <header>
+      <div>Books with Hooks</div>
+      <ul className="menu"><li><Link to="/">Home</Link></li><li><Link to="/search">Search</Link></li></ul>
+    </header>
+    <Security issuer='https://{YourOktaDomain}/oauth2/default'
+              clientId='{ClientId}'
+              redirectUri={window.location.origin + '/callback'}
+              pkce={true}>
+      <Route path='/' exact={true} component={Home}/>
+      <SecureRoute path='/search' exact={true} component={Search}/>
+      <Route path='/callback' component={LoginCallback}/>
+    </Security>
+  </Router>
+</div>
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Start everything with `npm start` and you'll be able to sign in with Okta!
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Links
 
-## Learn More
+This example uses the following open source libraries:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* [React](https://reactjs.org/)
+* [Okta React SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Help
 
-### Code Splitting
+Please post any questions [on the blog post](https://developer.okta.com/blog/2020/08/26/react-hooks), as issues in this repository, or on our [Okta Developer Forums](https://devforum.okta.com/). We also monitor Stack Overflow for questions tagged with `okta`. 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## License
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Apache 2.0, see [LICENSE](LICENSE).
